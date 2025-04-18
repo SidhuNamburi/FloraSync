@@ -1,0 +1,356 @@
+:root {
+  --primary: #2d5a3d;
+  --primary-light: #3a7a52;
+  --secondary: #f8f8f8;
+  --white: #ffffff;
+  --black: #333333;
+  --gray: #e0e0e0;
+  --dark-gray: #777;
+  --light-green: #e8f5e9;
+  --lighter-green: #f1f8e9;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Base Styles */
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+section {
+  padding: 4rem 0;
+}
+
+h1, h2, h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+p {
+  color: var(--black);
+  line-height: 1.6;
+}
+
+/* Button Styles */
+.primary-button, .secondary-button {
+  display: inline-block;
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.primary-button {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 2px solid var(--primary);
+}
+
+.primary-button:hover {
+  background-color: var(--primary-light);
+  border-color: var(--primary-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(45, 90, 61, 0.2);
+}
+
+.secondary-button {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.secondary-button:hover {
+  background-color: rgba(45, 90, 61, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(45, 90, 61, 0.1);
+}
+
+/* Hero Section */
+.hero-section {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 5rem 0;
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: var(--dark-gray);
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.hero-image {
+  flex: 1;
+  height: 400px;
+  background-image: url('https://images.unsplash.com/photo-1526397751294-331021109fbd');
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.hero-image:hover {
+  transform: scale(1.01);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Benefits Section */
+.benefits-section {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.section-subtitle {
+  color: var(--dark-gray);
+  margin-bottom: 3rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.benefit-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  text-align: center;
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.benefit-card:hover .benefit-icon {
+  transform: scale(1.2);
+}
+
+.benefit-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  transition: var(--transition);
+}
+
+.benefit-card:hover h3 {
+  color: var(--primary-light);
+}
+
+/* Quotes Section */
+.quotes-section {
+  text-align: center;
+  padding: 4rem 0;
+  background-color: var(--secondary);
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.quote-card {
+  padding: 2rem;
+  border-radius: 12px;
+  position: relative;
+  text-align: left;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.quote-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.quote-icon {
+  font-size: 3rem;
+  color: rgba(45, 90, 61, 0.2);
+  position: absolute;
+  top: 0.5rem;
+  left: 1rem;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.quote-card:hover .quote-icon {
+  color: rgba(45, 90, 61, 0.3);
+}
+
+.quote-text {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+  color: var(--black);
+  transition: var(--transition);
+}
+
+.quote-card:hover .quote-text {
+  color: var(--primary);
+}
+
+.quote-author {
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.quote-card:hover .quote-author {
+  color: var(--primary-light);
+}
+
+.leaf-decoration {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  opacity: 0.3;
+  transition: var(--transition);
+}
+
+.quote-card:hover .leaf-decoration {
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+
+/* CTA Section */
+.cta-section {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 0;
+  background-color: var(--primary);
+  color: var(--white);
+  border-radius: 12px;
+  margin: 3rem 0;
+  transition: var(--transition);
+}
+
+.cta-section:hover {
+  transform: scale(1.005);
+  box-shadow: 0 8px 24px rgba(45, 90, 61, 0.3);
+}
+
+.cta-content {
+  flex: 2;
+  padding: 0 2rem;
+}
+
+.cta-content h2 {
+  color: var(--white);
+}
+
+.cta-content p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2rem;
+}
+
+.cta-decoration {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plant-silhouette {
+  font-size: 8rem;
+  opacity: 0.2;
+  transition: var(--transition);
+}
+
+.cta-section:hover .plant-silhouette {
+  opacity: 0.3;
+  transform: rotate(-5deg);
+}
+
+/* Navbar Logo */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.navbar-logo img {
+  height: 40px;
+  transition: var(--transition);
+}
+
+.navbar-logo:hover img {
+  transform: rotate(-5deg) scale(1.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    padding: 3rem 0;
+  }
+  
+  .hero-content {
+    text-align: center;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+  }
+  
+  .hero-image {
+    width: 100%;
+  }
+  
+  .cta-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1rem;
+    gap: 2rem;
+    margin: 2rem 0;
+    border-radius: 0;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primary-button, .secondary-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .plant-silhouette {
+    font-size: 5rem;
+  }
+}

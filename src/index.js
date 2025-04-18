@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import Navbar from './Mycomponents/Navbar';
+import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-            <div>
-            <Navbar/>
-            </div>);
+root.render(<>
+            <App/>
+            </>);
