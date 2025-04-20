@@ -1,28 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Loginnav from "../Mycomponents/Loginnav";
 import Footer from "../Mycomponents/Footer";
+import axios from "axios";
+
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth/login", formData);
+
+      // Store user or token as needed
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      // Navigate to home or dashboard
+      navigate("/User");
+    } catch (err) {
+      setError(err.response?.data?.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Loginnav />
       <div className="login-container">
         <div className="login-card">
-          <div className="login-header">
-            <h2>Welcome Back</h2>
-            <p>Please enter your details to sign in</p>
-          </div>
+          <h2>Welcome Back</h2>
+          <p>Please enter your details to sign in</p>
 
-          <form className="login-form">
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email"
+                value={formData.email}
+                onChange={handleChange}
                 required
               />
-              <i className="fas fa-envelope"></i>
             </div>
 
             <div className="form-group">
@@ -30,32 +66,28 @@ const Login = () => {
               <input
                 type="password"
                 id="password"
-                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
                 required
               />
-              <i className="fas fa-lock"></i>
             </div>
 
             <div className="form-options">
-              <div className="remember-me">
-                <input type="checkbox" id="remember" />
-                <label htmlFor="remember">Remember me</label>
-              </div>
-              <a href="/ForgotPassword" className="forgot-password">
-                Forgot password?
-              </a>
+              <a href="/forgot-password">Forgot password?</a>
             </div>
 
-            <button type="submit" className="login-button">
-              Sign In
+            <button type="submit" disabled={loading}>
+              {loading ? "Signing In..." : "Sign In"}
             </button>
-          </form>
 
-          <div className="login-footer">
-            <p>
-              Don't have an account? <a href="/signup">Sign up</a>
-            </p>
-          </div>
+            {error && <div className="error-message">{error}</div>}
+
+            <div className="login-footer">
+              <p>
+                Don't have an account? <a href="/signup">Sign up</a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
       <Footer />

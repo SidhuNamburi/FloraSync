@@ -1,19 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Signup.css";
 import Loginnav from "../Mycomponents/Loginnav";
 import Footer from "../Mycomponents/Footer";
+import axios from "axios";
 
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate();
 
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+    setErrors({
+      ...errors,
+      [e.target.id]: "",
+    });
   };
 
   const validate = () => {
@@ -29,22 +41,36 @@ const Signup = () => {
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      // proceed with backend call
-    }
-  };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-    setErrors({ ...errors, [e.target.id]: "" });
+    if (Object.keys(validationErrors).length > 0) return;
+
+    setLoading(true);
+    try {
+      await axios.post("http://localhost:5000/api/auth/signup", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+      setSuccess("Account created successfully! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      setErrors({
+        ...errors,
+        server: err.response?.data?.message || "Registration failed",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,23 +78,21 @@ const Signup = () => {
       <Loginnav />
       <div className="signup-container">
         <div className="signup-card">
-          <div className="signup-header">
-            <h2>Create Account</h2>
-            <p>Join us by filling in your details below</p>
-          </div>
+          <h2>Create Account</h2>
+          <p>Join us by filling in your details below</p>
 
-          <form className="signup-form" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <input
                 type="text"
                 id="username"
-                placeholder="Choose a username"
                 value={formData.username}
                 onChange={handleChange}
               />
-              <i className="fas fa-user"></i>
-              {errors.username && <span className="error">{errors.username}</span>}
+              {errors.username && (
+                <span className="error">{errors.username}</span>
+              )}
             </div>
 
             <div className="form-group">
@@ -76,33 +100,45 @@ const Signup = () => {
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
               />
-              <i className="fas fa-envelope"></i>
               {errors.email && <span className="error">{errors.email}</span>}
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
-                type={showPassword ? "text" : "password"}
+                type="password"
                 id="password"
-                placeholder="Create a password"
                 value={formData.password}
                 onChange={handleChange}
               />
-              <i
-                className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
-                onClick={togglePassword}
-                style={{ cursor: "pointer" }}
-              ></i>
-              {errors.password && <span className="error">{errors.password}</span>}
+              {errors.password && (
+                <span className="error">{errors.password}</span>
+              )}
             </div>
 
-            <button type="submit" className="signup-button">
-              Sign Up
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+              />
+              {errors.confirmPassword && (
+                <span className="error">{errors.confirmPassword}</span>
+              )}
+            </div>
+
+            {errors.server && (
+              <div className="error-message">{errors.server}</div>
+            )}
+            {success && <div className="success-message">{success}</div>}
+
+            <button type="submit" className="signup-button" disabled={loading}>
+              {loading ? "Creating Account..." : "Sign Up"}
             </button>
           </form>
 
