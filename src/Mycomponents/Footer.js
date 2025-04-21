@@ -1,6 +1,6 @@
 import React from 'react';
 import './Footer.css';
-
+import {Link} from 'react-router-dom';
 const Footer = () => {
   return (
     <footer>
@@ -12,28 +12,28 @@ const Footer = () => {
             lovers since 2025.
           </p>
           <div className="social-icons">
-            <a href="/" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-            <a href="/" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-            <a href="/" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-            <a href="/" aria-label="Pinterest"><i className="fab fa-pinterest"></i></a>
+            <Link to="/" aria-label="Facebook"><i className="fab fa-facebook-f"></i></Link>
+            <Link to="/" aria-label="Twitter"><i className="fab fa-twitter"></i></Link>
+            <Link to="/" aria-label="Instagram"><i className="fab fa-instagram"></i></Link>
+            <Link to="/" aria-label="Pinterest"><i className="fab fa-pinterest"></i></Link>
           </div>
         </div>
         <div className="footer-column">
           <h3>Quick Links</h3>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">Plant Library</a></li>
-            <li><a href="/">Care Guides</a></li>
-            <li><a href="/">My Plants</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/">Plant Library</Link></li>
+            <li><Link to="/">Care Guides</Link></li>
+            <li><Link to="/">My Plants</Link></li>
           </ul>
         </div>
         <div className="footer-column">
           <h3>Support</h3>
           <ul>
-            <li><a href="/">FAQ</a></li>
-            <li><a href="/">Contact Us</a></li>
-            <li><a href="/">Privacy Policy</a></li>
-            <li><a href="/">Terms of Service</a></li>
+            <li><Link to="/">FAQ</Link></li>
+            <li><Link to="/">Contact Us</Link></li>
+            <li><Link to="/">Privacy Policy</Link></li>
+            <li><Link to="/">Terms of Service</Link></li>
           </ul>
         </div>
       </div>

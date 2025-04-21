@@ -4,7 +4,7 @@ import "./Signup.css";
 import Loginnav from "../Mycomponents/Loginnav";
 import Footer from "../Mycomponents/Footer";
 import axios from "axios";
-
+import {Link} from "react-router-dom";
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -144,7 +144,7 @@ const Signup = () => {
 
           <div className="signup-footer">
             <p>
-              Already have an account? <a href="/login">Login</a>
+              Already have an account? <Link to="/login">Login</Link>
             </p>
           </div>
         </div>

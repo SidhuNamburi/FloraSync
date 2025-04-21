@@ -1,17 +1,17 @@
 import React from 'react';
 import './Navbar.css';
-
+import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <header>
       <div className="logo">Flora Sync</div>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/">Plants</a></li>
-          <li><a href="/">Weather</a></li>
-          <li><a href="/">Projects</a></li>
-          <li><a href="/">Help</a></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/">Plants</Link></li>
+          <li><Link to="/">Weather</Link></li>
+          <li><Link to="/">Projects</Link></li>
+          <li><Link to="/">Help</Link></li>
         </ul>
       </nav>
       <div className="search-container">
