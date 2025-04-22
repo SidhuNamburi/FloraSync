@@ -1,19 +1,24 @@
 import React from "react";
 import Footer from "../Mycomponents/Footer";
 import Navbar from "../Mycomponents/Navbar";
-import ScrollPlants from "../Mycomponents/ScrollPlants";
-import ContainerPlants from "../Mycomponents/ContainerPlants";
 import "./User.css";
-
+import ScrollPlants from "../Mycomponents/ScrollPlants";
+import Infobox from "../Mycomponents/Infobox";
 const User = () => {
-    return (
-      <>
-        <Navbar />
-        <ScrollPlants />
-        <ContainerPlants />
-        <Footer />
-      </>
-    );
-  };
-  
+  const customLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/allplants', label: 'Plants' },
+    { to: '/', label: 'Projects' }
+  ];
+
+  return (
+    <>
+      <Navbar customLinks={customLinks} showSearch={false} />
+      <ScrollPlants/>
+      < Infobox/>
+      <Footer />
+    </>
+  );
+};
+
 export default User;

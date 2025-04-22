@@ -4,7 +4,8 @@ import "./Signup.css";
 import Loginnav from "../Mycomponents/Loginnav";
 import Footer from "../Mycomponents/Footer";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -17,6 +18,7 @@ const Signup = () => {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
+  // Check if user is already logged in, and redirect if so
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -40,6 +42,10 @@ const Signup = () => {
       newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
+    } else if (!/(?=.*[0-9])/.test(formData.password)) {
+      newErrors.password = "Password must contain at least one number";
+    } else if (!/(?=.*[!@#$%^&*])/.test(formData.password)) {
+      newErrors.password = "Password must contain at least one special character";
     }
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match";
@@ -56,13 +62,21 @@ const Signup = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/signup", {
+      const res = await axios.post("http://localhost:5000/api/auth/signup", {
         username: formData.username,
         email: formData.email,
         password: formData.password,
       });
-      setSuccess("Account created successfully! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 2000);
+
+      // ✅ Save token and user info
+      const { token, user } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("userId", user.id);
+      localStorage.setItem("username", user.username);
+
+      // ✅ Show success and redirect
+      setSuccess("Account created successfully! Redirecting...");
+      setTimeout(() => navigate("/user"), 1500);
     } catch (err) {
       setErrors({
         ...errors,
@@ -138,7 +152,11 @@ const Signup = () => {
             {success && <div className="success-message">{success}</div>}
 
             <button type="submit" className="signup-button" disabled={loading}>
-              {loading ? "Creating Account..." : "Sign Up"}
+              {loading ? (
+                <span className="spinner"></span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
 

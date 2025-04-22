@@ -1,0 +1,114 @@
+.all-plants-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.all-plants-container h2 {
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 1.5rem;
+}
+
+.message {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+  color: #555;
+}
+
+.plants-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.plant-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+}
+
+.plant-card:hover {
+  transform: translateY(-4px);
+}
+
+.plant-image {
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+}
+
+.info {
+  padding: 1rem;
+  text-align: left;
+}
+
+.info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #2e7d32;
+}
+
+.species {
+  font-style: italic;
+  color: #66bb6a;
+  margin-bottom: 0.5rem;
+}
+
+.info p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #388e3c;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .plant-card {
+    width: 90%;
+  }
+
+  .plants-grid {
+    gap: 1.5rem;
+  }
+}

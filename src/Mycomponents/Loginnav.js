@@ -14,7 +14,7 @@ const Loginnav = () => {
         <nav className="main-nav">
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/plant-library">Plant Library</Link></li>
+            <li><Link to="/PlantLibrary">Plant Library</Link></li>
           </ul>
         </nav>
 

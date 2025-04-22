@@ -1,38 +1,62 @@
 import React from 'react';
 import './ContainerPlants.css';
 
-const ContainerPlants = () => {
+const ContainerPlants = ({ 
+  name, 
+  species, 
+  description, 
+  light, 
+  water, 
+  temperature, 
+  humidity, 
+  image 
+}) => {
   return (
-    <section className="plant-info">
-      <div className="plant-image-placeholder" aria-label="Monstera image"></div>
-      <div className="info-container">
-        <h3>Monstera Deliciosa</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-          Monstera adds vibrant greenery and makes a bold statement in any indoor setting.
-        </p>
+    <div className="plant-card">
+      <div className="image-container">
+        <img src={image} alt={name} className="plant-img" />
+        <div className="species-badge">{species}</div>
+      </div>
+      
+      <div className="plant-content">
+        <h3 className="plant-name">{name}</h3>
+        <p className="plant-desc">{description}</p>
+        
         <div className="care-details">
-          <div className="care-item">
-            <i className="fas fa-sun"></i>
+          <div className="detail-item">
+            <span className="detail-icon">☀️</span>
             <div>
-              <strong>Light:</strong> Bright, indirect sunlight
+              <p className="detail-label">Light</p>
+              <p className="detail-value">{light}</p>
             </div>
           </div>
-          <div className="care-item">
-            <i className="fas fa-tint"></i>
+          
+          <div className="detail-item">
+            <span className="detail-icon">💧</span>
             <div>
-              <strong>Water:</strong> Water when top inch of soil is dry
+              <p className="detail-label">Water</p>
+              <p className="detail-value">{water}</p>
             </div>
           </div>
-          <div className="care-item">
-            <i className="fas fa-thermometer-half"></i>
+          
+          <div className="detail-item">
+            <span className="detail-icon">🌡️</span>
             <div>
-              <strong>Temperature:</strong> 18–27°C (65–80°F)
+              <p className="detail-label">Temperature</p>
+              <p className="detail-value">{temperature}</p>
+            </div>
+          </div>
+          
+          <div className="detail-item">
+            <span className="detail-icon">💦</span>
+            <div>
+              <p className="detail-label">Humidity</p>
+              <p className="detail-value">{humidity}</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

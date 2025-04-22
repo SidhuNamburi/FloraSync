@@ -1,23 +1,34 @@
 import React from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-const Navbar = () => {
+
+const Navbar = ({ customLinks, showSearch = true }) => {
+  const defaultLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/allplants', label: 'Plants' },
+    { to: '/', label: 'Weather' },
+    { to: '/', label: 'Projects' },
+    { to: '/', label: 'Help' }
+  ];
+
+  const linksToRender = customLinks || defaultLinks;
+
   return (
     <header>
       <div className="logo">Flora Sync</div>
       <nav>
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/">Plants</Link></li>
-          <li><Link to="/">Weather</Link></li>
-          <li><Link to="/">Projects</Link></li>
-          <li><Link to="/">Help</Link></li>
+          {linksToRender.map((link, index) => (
+            <li key={index}><Link to={link.to}>{link.label}</Link></li>
+          ))}
         </ul>
       </nav>
-      <div className="search-container">
-        <input type="text" placeholder="Search plants..." />
-        <i className="fas fa-search"></i>
-      </div>
+      {showSearch && (
+        <div className="search-container">
+          <input type="text" placeholder="Search plants..." />
+          <i className="fas fa-search"></i>
+        </div>
+      )}
     </header>
   );
 };

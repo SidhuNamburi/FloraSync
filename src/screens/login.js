@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from "react";  // Add useState and useEffect here
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Loginnav from "../Mycomponents/Loginnav";
 import Footer from "../Mycomponents/Footer";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 const Login = () => {
+  const navigate = useNavigate();
+
+  
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -24,7 +27,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Client-side validation
     if (!formData.email || !formData.password) {
       setError("Email and password are required");
@@ -44,12 +47,12 @@ const Login = () => {
         email: formData.email.toLowerCase().trim(),
         password: formData.password
       });
-      
+
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
       navigate("/User");
     } catch (err) {
-      // More specific error handling
       if (err.response) {
         if (err.response.status === 401) {
           setError("Invalid email or password");
@@ -64,14 +67,6 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleForgotPassword = () => {
-    if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
-      setError("Please enter a valid email address to reset password");
-      return;
-    }
-    navigate("/forgot-password", { state: { email: formData.email } });
   };
 
   return (
@@ -111,14 +106,14 @@ const Login = () => {
               <button
                 type="button"
                 className="link-button"
-                onClick={handleForgotPassword}
+                onClick={() => navigate("/forgot-password")}
               >
                 Forgot password?
               </button>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
               className={loading ? "loading" : ""}
             >
@@ -127,7 +122,9 @@ const Login = () => {
                   <span className="spinner"></span>
                   Signing In...
                 </>
-              ) : "Sign In"}
+              ) : (
+                "Sign In"
+              )}
             </button>
 
             {error && <div className="error-message">{error}</div>}

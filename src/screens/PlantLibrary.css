@@ -1,0 +1,60 @@
+.library-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+.plant-library {
+  padding: 40px 20px;
+  flex-grow: 1;
+}
+
+.library-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.library-subtitle {
+  text-align: center;
+  color: #7f8c8d;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.plants-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .library-title {
+    font-size: 2rem;
+  }
+  
+  .library-subtitle {
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+  
+  .plant-library {
+    padding: 30px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .library-title {
+    font-size: 1.8rem;
+  }
+  
+  .plants-grid {
+    gap: 15px;
+  }
+}
