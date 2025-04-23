@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './ContainerPlants.css';
+import './Infobox.css';
 
-const ContainerPlants = () => {
+const Infobox = () => {
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,99 +29,98 @@ const ContainerPlants = () => {
   }, []);
 
   if (loading) return (
-    <div className="state-container loading">
-      <div className="state-content">
+    <div className="state-container">
+      <div className="loading-state">
         <div className="spinner">🌿</div>
-        <h2>Loading Your Green Collection</h2>
-        <p>Gathering plant data...</p>
+        <h2>Loading Your Plant Collection</h2>
       </div>
     </div>
   );
 
   if (error) return (
-    <div className="state-container error">
-      <div className="state-content">
+    <div className="state-container">
+      <div className="error-state">
         <div className="error-icon">⚠️</div>
-        <h2>We Hit a Snag</h2>
+        <h2>Something Went Wrong</h2>
         <p>{error}</p>
-        <button className="retry-button">Try Again</button>
       </div>
     </div>
   );
 
   return (
     <div className="plants-container">
-      <div className="plants-gallery">
-        {plants.length > 0 ? (
-          plants.map((plant) => (
-            <div className="plant-card rectangular" key={plant._id}>
-              <div className="plant-header">
-                <h1 className="plant-name">{plant.name}</h1>
-                <p className="plant-subtitle">{plant.species}</p>
+      {plants.length > 0 ? (
+        <div className="plants-grid">
+          {plants.map((plant) => (
+            <div className="plant-card" key={plant._id}>
+              <div className="card-header">
+                <h3 className="plant-name">{plant.name}</h3>
+                <p className="plant-species">{plant.species}</p>
               </div>
               
-              {plant.imageUrl && (
-                <div className="plant-image-container">
-                  <img 
-                    src={plant.imageUrl} 
-                    alt={plant.name} 
-                    className="plant-image"
-                  />
-                </div>
-              )}
+              <div className="image-container">
+                <img 
+                  src={plant.imageUrl || '/default-plant.jpg'} 
+                  alt={plant.name} 
+                  className="plant-image"
+                />
+              </div>
               
               <div className="plant-description">
-                <p>{plant.description}</p>
+                <p>{plant.description || "No description available"}</p>
               </div>
               
-              <div className="care-guide">
-                <div className="care-item sunlight">
-                  <div className="care-icon">☀️</div>
-                  <div className="care-details">
-                    <h3 className="care-title">Light</h3>
-                    <p className="care-detail">{plant.light}</p>
+              <div className="care-details">
+                <div className="care-row">
+                  <div className="care-item light">
+                    <span className="care-icon">☀️</span>
+                    <div>
+                      <h4>Light</h4>
+                      <p>{plant.light || "Not specified"}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="care-item water">
+                    <span className="care-icon">💧</span>
+                    <div>
+                      <h4>Water</h4>
+                      <p>{plant.water || "Not specified"}</p>
+                    </div>
                   </div>
                 </div>
                 
-                <div className="care-item water">
-                  <div className="care-icon">💧</div>
-                  <div className="care-details">
-                    <h3 className="care-title">Water</h3>
-                    <p className="care-detail">{plant.water}</p>
+                <div className="care-row">
+                  <div className="care-item temp">
+                    <span className="care-icon">🌡️</span>
+                    <div>
+                      <h4>Temp</h4>
+                      <p>{plant.temp || "Not specified"}</p>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="care-item temperature">
-                  <div className="care-icon">🌡️</div>
-                  <div className="care-details">
-                    <h3 className="care-title">Temperature</h3>
-                    <p className="care-detail">{plant.temp}</p>
-                  </div>
-                </div>
-                
-                <div className="care-item humidity">
-                  <div className="care-icon">🌿</div>
-                  <div className="care-details">
-                    <h3 className="care-title">Humidity</h3>
-                    <p className="care-detail">{plant.humidity}</p>
+                  
+                  <div className="care-item humidity">
+                    <span className="care-icon">💦</span>
+                    <div>
+                      <h4>Humidity</h4>
+                      <p>{plant.humidity || "Not specified"}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="state-container empty">
-            <div className="state-content rectangular">
-              <div className="empty-icon">🌱</div>
-              <h2>Your Garden Awaits</h2>
-              <p>No plants found. Start by adding your first green companion!</p>
-              <button className="action-button">Add First Plant</button>
-            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="state-container">
+          <div className="empty-state">
+            <div className="empty-icon">🌱</div>
+            <h2>Your Garden Awaits</h2>
+            <p>No plants found. Add your first plant to begin!</p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ContainerPlants;
+export default Infobox;

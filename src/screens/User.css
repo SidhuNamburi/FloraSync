@@ -59,3 +59,37 @@
     font-size: 1rem;
     margin-bottom: 1.5rem;
   }
+  /* Quote Heading Section */
+.quote-heading {
+  background-color: #f0fdf4;
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #a5d6a7;
+  animation: fadeInDown 1s ease-out;
+}
+
+.quote-heading h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 0.5rem;
+}
+
+.quote-heading p {
+  font-size: 1.1rem;
+  color: #4caf50;
+  font-style: italic;
+}
+
+/* Simple fade in animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
