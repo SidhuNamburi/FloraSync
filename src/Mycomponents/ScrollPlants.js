@@ -1,29 +1,27 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import './ScrollPlants.css';
+import MiniWindow from './ChatbotWindow';
 
 const ScrollPlants = () => {
   const galleryRef = useRef();
   const [plants, setPlants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPlant, setSelectedPlant] = useState(null);
 
   useEffect(() => {
     const fetchPlants = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('Authentication required');
-        }
+        if (!token) throw new Error('Authentication required');
+
         const res = await axios.get('http://localhost:5000/api/user/plants', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         setPlants(res.data.plants || []);
       } catch (error) {
-        console.error('Error fetching plants:', error);
         setError(error.response?.data?.message || error.message || 'Failed to fetch plants');
       } finally {
         setLoading(false);
@@ -37,11 +35,19 @@ const ScrollPlants = () => {
     const gallery = galleryRef.current;
     if (!gallery || !gallery.children[0]) return;
 
-    const itemWidth = gallery.children[0].getBoundingClientRect().width + 16; // including gap
+    const itemWidth = gallery.children[0].getBoundingClientRect().width + 16;
     gallery.scrollBy({
       left: direction === 'left' ? -itemWidth : itemWidth,
       behavior: 'smooth',
     });
+  };
+
+  const handlePlantClick = (plant) => {
+    setSelectedPlant(plant);
+  };
+
+  const closeMiniWindow = () => {
+    setSelectedPlant(null);
   };
 
   if (loading) return <div className="loading">Loading popular plants...</div>;
@@ -60,7 +66,11 @@ const ScrollPlants = () => {
         <div className="gallery" ref={galleryRef}>
           {plants.length > 0 ? (
             plants.map((plant) => (
-              <div key={plant._id} className="gallery-item">
+              <div
+                key={plant._id}
+                className="gallery-item"
+                onClick={() => handlePlantClick(plant)}
+              >
                 <div
                   className="image-placeholder"
                   style={{ backgroundImage: `url(${plant.imageUrl || '/default-plant.jpg'})` }}
@@ -74,6 +84,10 @@ const ScrollPlants = () => {
           )}
         </div>
       </div>
+
+      {selectedPlant && (
+        <MiniWindow plant={selectedPlant} onClose={closeMiniWindow} />
+      )}
     </section>
   );
 };

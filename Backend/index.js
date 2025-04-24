@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); 
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -39,7 +39,9 @@ app.use('/api/auth', require('./routes/verifyResetOtp'));
 app.use('/api/auth', require('./routes/resetPassword'));
 app.use('/api/user', require('./routes/user'));  // Routes related to user, like /api/user/plants
 app.use('/api/user', require('./routes/addPlants'));  // Route for adding a plant
-app.use('/api/plants', require('./routes/allplants'));  // Corrected route for getting all plants
+app.use('/api/plants', require('./routes/allplants'));  // Route for getting all plants
+app.use('/api/user', require('./routes/weather'));  // Route for getting weather data
+app.use('/api/chat', require('./routes/chatbot'));  // Route for chatbot interaction
 
 // Start server
 app.listen(PORT, () => {
