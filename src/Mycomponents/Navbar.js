@@ -7,7 +7,6 @@ const Navbar = ({ customLinks, showSearch = true }) => {
     { to: '/', label: 'Home' },
     { to: '/allplants', label: 'Plants' },
     { to: '/', label: 'Weather' },
-    { to: '/', label: 'Projects' },
     { to: '/', label: 'Help' }
   ];
 
