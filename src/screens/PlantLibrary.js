@@ -18,7 +18,6 @@ const PlantLibrary = () => {
           throw new Error('Failed to fetch');
         }
         const data = await response.json();
-        console.log('Fetched plants:', data); // Log the response to debug
         setAllPlants(data);
       } catch (error) {
         console.error('Failed to fetch plants:', error);

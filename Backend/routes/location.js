@@ -1,35 +1,35 @@
-const express = require('express');
-const axios = require('axios');
+const express = require("express");
 const router = express.Router();
-require('dotenv').config();  // To access environment variables
+const User = require("../models/User"); // Import the User model
+const authenticate = require("../middleware/verifyToken"); // Custom middleware to authenticate users
 
-// Route to handle location data (get from IP or from frontend)
-router.post('/location', async (req, res) => {
+// Update user's location
+router.post("/location", authenticate, async (req, res) => {  // Remove '/api' part here
   const { latitude, longitude } = req.body;
 
-  // If latitude and longitude are sent from the frontend
-  if (latitude && longitude) {
-    return res.json({ latitude, longitude, city: 'Unknown', country: 'Unknown' });
+  if (!latitude || !longitude) {
+    return res.status(400).json({ message: "Latitude and longitude are required." });
   }
 
-  // Fallback if latitude and longitude are not provided (use IP geolocation)
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || 'YOUR_TEST_IP';
-  console.log('User IP:', ip);  // Log the IP to check
-
   try {
-    const response = await axios.get(`http://api.ipstack.com/${ip}?access_key=${process.env.IPSTACK_API_KEY}`);
-    console.log('GeoData Response:', response.data);  // Log the full response
-
-    const { latitude, longitude, city, country } = response.data;
-
-    if (latitude && longitude) {
-      return res.json({ latitude, longitude, city, country });
-    } else {
-      return res.status(404).json({ error: 'Location data not found' });
+    // Find user and update their location
+    const user = await User.findById(req.user.userId); 
+    // req.user.id comes from the authenticate middleware
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
     }
-  } catch (error) {
-    console.error('Error fetching location:', error);
-    return res.status(500).json({ error: 'Failed to fetch location data' });
+
+    // Update latitude and longitude
+    user.latitude = latitude;
+    user.longitude = longitude;
+
+    await user.save(); // Save the user's updated location
+
+    return res.status(200).json({ message: "Location updated successfully.", location: user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error, please try again later." });
   }
 });
 

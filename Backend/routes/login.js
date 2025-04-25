@@ -22,16 +22,16 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
-
+    
     // Update user's location if latitude and longitude are provided
     if (latitude && longitude) {
       user.latitude = latitude;
       user.longitude = longitude;
       await user.save();  // Save the updated location
     }
-
+    
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+    console.log(token);
     res.status(200).json({
       success: true,
       message: 'Login successful',

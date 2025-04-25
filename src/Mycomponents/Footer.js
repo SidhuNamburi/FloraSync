@@ -12,7 +12,7 @@ const Footer = () => {
             lovers since 2025.
           </p>
           <div className="social-icons">
-            <Link to="/" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></Link>
+            <Link to="/" aria-label="Facebook"><i className="fa-brands fa-facebook"></i></Link>
             <Link to="/" aria-label="Twitter"><i className="fab fa-twitter"></i></Link>
             <Link to="/" aria-label="Instagram"><i className="fab fa-instagram"></i></Link>
             <Link to="/" aria-label="Pinterest"><i className="fab fa-pinterest"></i></Link>

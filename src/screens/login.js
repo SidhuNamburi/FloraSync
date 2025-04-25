@@ -1,4 +1,4 @@
-import React, { useState } from "react";  // Add useState and useEffect here
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import Loginnav from "../Mycomponents/Loginnav";
@@ -10,99 +10,102 @@ const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const [locationLoading, setLocationLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
     setError(""); // Clear error when user types
   };
 
-  const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLatitude(latitude);
-          setLongitude(longitude);
-          console.log("Latitude:", latitude);
-          console.log("Longitude:", longitude);
-
-          // Send the latitude and longitude to the backend for location processing
-          axios
-            .post("http://localhost:5000/api/location", { latitude, longitude })
-            .then((response) => {
-              console.log("Location Response:", response.data);  // Handle location response
-            })
-            .catch((error) => {
-              console.error("Error fetching location data:", error);
-            });
-        },
-        (err) => {
-          setError("Geolocation not available or user denied permission");
-          console.error(err);
-        }
-      );
-    } else {
-      setError("Geolocation not supported by this browser");
-    }
+  const getUserLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            resolve({ latitude, longitude });
+          },
+          (error) => {
+            reject("Unable to retrieve your location.");
+          },
+          {
+            enableHighAccuracy: true, 
+            timeout: 10000,
+            maximumAge: 0,
+          }
+        );
+      } else {
+        reject("Geolocation is not supported by this browser.");
+      }
+    });
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Client-side validation
     if (!formData.email || !formData.password) {
       setError("Email and password are required");
       return;
     }
-
+  
     if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       setError("Please enter a valid email address");
       return;
     }
-
+  
     setLoading(true);
     setError("");
-
-    // Get user's location before submitting login
-    getLocation();
-
+    setLocationLoading(true); // Start location loading
+  
     try {
+      // Get location from the browser (HTML5 geolocation)
+      const locationData = await getUserLocation();
+  
+      // Proceed with login request, sending location data to backend
       const response = await axios.post("http://localhost:5000/api/auth/login", {
         email: formData.email.toLowerCase().trim(),
         password: formData.password,
-        latitude,  // Send latitude to backend
-        longitude  // Send longitude to backend
       });
-
+  
+      // Send location data to update the user's location in the backend
+      await axios.post(
+        "http://localhost:5000/api/location",
+        {
+          latitude: locationData.latitude,
+          longitude: locationData.longitude,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${response.data.token}`, // Pass the token to authenticate
+          },
+        }
+      );
+  
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
       navigate("/User");
     } catch (err) {
-      if (err.response) {
-        if (err.response.status === 401) {
-          setError("Invalid email or password");
-        } else {
-          setError(err.response.data.message || "Login failed");
-        }
-      } else if (err.request) {
-        setError("No response from server. Please try again later.");
+      // Error handling
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "Login failed");
       } else {
-        setError("An unexpected error occurred");
+        setError("An unexpected error occurred.");
       }
     } finally {
       setLoading(false);
+      setLocationLoading(false); // End location loading
     }
   };
+  
 
   return (
     <>
@@ -149,10 +152,10 @@ const Login = () => {
 
             <button
               type="submit"
-              disabled={loading}
-              className={loading ? "loading" : ""}
+              disabled={loading || locationLoading}
+              className={loading || locationLoading ? "loading" : ""}
             >
-              {loading ? (
+              {loading || locationLoading ? (
                 <>
                   <span className="spinner"></span>
                   Signing In...

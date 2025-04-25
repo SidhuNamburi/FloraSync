@@ -1,11 +1,8 @@
-// middleware/verifyToken.js
-
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
   // Extract token from the Authorization header
   const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-
   // If no token is provided, send a 401 Unauthorized response
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
@@ -16,7 +13,7 @@ const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     // Attach decoded user data to the request object for use in route handlers
-    req.user = decoded;
+    req.user = decoded; // decoded.userId will now be available
 
     // Continue to the next middleware or route handler
     next();

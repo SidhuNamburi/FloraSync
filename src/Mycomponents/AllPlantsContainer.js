@@ -1,3 +1,4 @@
+// frontend/AllPlantsContainer.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AllPlantsContainer.css';
@@ -23,12 +24,16 @@ const AllPlantsContainer = () => {
           }),
         ]);
 
+        console.log("All Plants Response:", allRes.data); // Check structure of all plants
+        console.log("User Plants Response:", userRes.data); // Check structure of user plants
+
         const all = Array.isArray(allRes.data) ? allRes.data : [];
-        const added = userRes.data.plants.map((plant) => plant.id);
+        const added = userRes.data.plants ? userRes.data.plants.map((plant) => plant._id.toString()) : [];
 
         setAllPlants(all);
         setAddedPlants(added);
       } catch (err) {
+        console.error("Error details:", err);
         setError(err.response?.data?.message || 'Failed to load plants');
       } finally {
         setLoading(false);
@@ -38,7 +43,10 @@ const AllPlantsContainer = () => {
     fetchPlants();
   }, [token]);
 
-  const notAddedPlants = allPlants.filter((plant) => !addedPlants.includes(plant.id));
+  // Ensure the plants that have not been added yet are correctly filtered
+  const notAddedPlants = allPlants.filter((plant) => {
+    return plant && plant.id && !addedPlants.includes(plant.id.toString());
+  });
 
   if (loading) return <div className="loading">Loading available plants...</div>;
   if (error) return <div className="error">Error: {error}</div>;
@@ -88,7 +96,7 @@ const AllPlantsContainer = () => {
       );
 
       setMessage('✅ Plant added successfully!');
-      setAddedPlants((prev) => [...prev, plantId]);
+      setAddedPlants((prev) => [...prev, plantId.toString()]); // Ensure plantId is a string
       setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to add plant');
