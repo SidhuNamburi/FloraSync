@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-
-  
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,6 +23,36 @@ const Login = () => {
       [e.target.id]: e.target.value
     });
     setError(""); // Clear error when user types
+  };
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLatitude(latitude);
+          setLongitude(longitude);
+          console.log("Latitude:", latitude);
+          console.log("Longitude:", longitude);
+
+          // Send the latitude and longitude to the backend for location processing
+          axios
+            .post("http://localhost:5000/api/location", { latitude, longitude })
+            .then((response) => {
+              console.log("Location Response:", response.data);  // Handle location response
+            })
+            .catch((error) => {
+              console.error("Error fetching location data:", error);
+            });
+        },
+        (err) => {
+          setError("Geolocation not available or user denied permission");
+          console.error(err);
+        }
+      );
+    } else {
+      setError("Geolocation not supported by this browser");
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -42,10 +72,15 @@ const Login = () => {
     setLoading(true);
     setError("");
 
+    // Get user's location before submitting login
+    getLocation();
+
     try {
       const response = await axios.post("http://localhost:5000/api/auth/login", {
         email: formData.email.toLowerCase().trim(),
-        password: formData.password
+        password: formData.password,
+        latitude,  // Send latitude to backend
+        longitude  // Send longitude to backend
       });
 
       localStorage.setItem("user", JSON.stringify(response.data.user));

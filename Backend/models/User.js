@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -30,9 +31,18 @@ const UserSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  // New fields for latitude and longitude with default values for Delhi
+  latitude: {
+    type: Number,
+    default: 28.6139 // Delhi latitude
+  },
+  longitude: {
+    type: Number,
+    default: 77.2090 // Delhi longitude
   }
 });
 
-
 const User = mongoose.model('User', UserSchema);
+
 module.exports = User;

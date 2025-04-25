@@ -24,7 +24,7 @@ const AllPlantsContainer = () => {
         ]);
 
         const all = Array.isArray(allRes.data) ? allRes.data : [];
-        const added = userRes.data.plants.map((plant) => plant._id);
+        const added = userRes.data.plants.map((plant) => plant.id);
 
         setAllPlants(all);
         setAddedPlants(added);
@@ -38,7 +38,7 @@ const AllPlantsContainer = () => {
     fetchPlants();
   }, [token]);
 
-  const notAddedPlants = allPlants.filter((plant) => !addedPlants.includes(plant._id));
+  const notAddedPlants = allPlants.filter((plant) => !addedPlants.includes(plant.id));
 
   if (loading) return <div className="loading">Loading available plants...</div>;
   if (error) return <div className="error">Error: {error}</div>;
@@ -53,7 +53,7 @@ const AllPlantsContainer = () => {
           <div className="message">🎉 You have added all available plants!</div>
         ) : (
           notAddedPlants.map((plant) => (
-            <div className="plant-card" key={plant._id}>
+            <div className="plant-card" key={plant.id}>
               <div
                 className="plant-image"
                 style={{ backgroundImage: `url(${plant.imageUrl})` }}
@@ -63,7 +63,7 @@ const AllPlantsContainer = () => {
                 <p className="species"><i>{plant.species}</i></p>
                 <p>{plant.description}</p>
                 <button
-                  onClick={() => handleAddPlant(plant._id)}
+                  onClick={() => handleAddPlant(plant.id)}
                 >
                   Add Plant
                 </button>

@@ -1,15 +1,17 @@
+// src/Mycomponents/ContainerPlants.js
+
 import React from 'react';
 import './ContainerPlants.css';
 
-const ContainerPlants = ({ 
-  name, 
-  species, 
-  description, 
-  light, 
-  water, 
-  temperature, 
-  humidity, 
-  image 
+const ContainerPlants = ({
+  name,
+  species,
+  description,
+  light,
+  water,
+  temperature,
+  humidity,
+  image,
 }) => {
   return (
     <div className="plant-card">
@@ -17,11 +19,11 @@ const ContainerPlants = ({
         <img src={image} alt={name} className="plant-img" />
         <div className="species-badge">{species}</div>
       </div>
-      
+
       <div className="plant-content">
         <h3 className="plant-name">{name}</h3>
         <p className="plant-desc">{description}</p>
-        
+
         <div className="care-details">
           <div className="detail-item">
             <span className="detail-icon">☀️</span>
@@ -30,7 +32,7 @@ const ContainerPlants = ({
               <p className="detail-value">{light}</p>
             </div>
           </div>
-          
+
           <div className="detail-item">
             <span className="detail-icon">💧</span>
             <div>
@@ -38,7 +40,7 @@ const ContainerPlants = ({
               <p className="detail-value">{water}</p>
             </div>
           </div>
-          
+
           <div className="detail-item">
             <span className="detail-icon">🌡️</span>
             <div>
@@ -46,7 +48,7 @@ const ContainerPlants = ({
               <p className="detail-value">{temperature}</p>
             </div>
           </div>
-          
+
           <div className="detail-item">
             <span className="detail-icon">💦</span>
             <div>

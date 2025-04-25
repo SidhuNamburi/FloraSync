@@ -9,7 +9,7 @@ const User = () => {
   const customLinks = [
     { to: '/', label: 'Home' },
     { to: '/allplants', label: 'Plants' },
-    { to: '/', label: 'Weather' }
+    { to: '/location', label: 'Weather' }
   ];
 
   return (
