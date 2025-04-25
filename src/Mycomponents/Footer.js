@@ -22,7 +22,7 @@ const Footer = () => {
           <h3>Quick Links</h3>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/">Plant Library</Link></li>
+            <li><Link to="/plantlibrary">Plant Library</Link></li>
             <li><Link to="/">Care Guides</Link></li>
             <li><Link to="/">My Plants</Link></li>
           </ul>
@@ -30,10 +30,10 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Support</h3>
           <ul>
-            <li><Link to="/">FAQ</Link></li>
-            <li><Link to="/">Contact Us</Link></li>
-            <li><Link to="/">Privacy Policy</Link></li>
-            <li><Link to="/">Terms of Service</Link></li>
+            <li><Link to="/about">FAQ</Link></li>
+            <li><Link to="/about">Contact Us</Link></li>
+            <li><Link to="/about">Privacy Policy</Link></li>
+            <li><Link to="/about">Terms of Service</Link></li>
           </ul>
         </div>
       </div>
