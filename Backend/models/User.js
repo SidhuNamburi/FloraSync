@@ -35,11 +35,11 @@ const UserSchema = new mongoose.Schema({
   // New fields for latitude and longitude with default values for Delhi
   latitude: {
     type: Number,
-    default: 28.6139 // Delhi latitude
+    default: 17.4065 // Hyderabad latitude
   },
   longitude: {
     type: Number,
-    default: 77.2090 // Delhi longitude
+    default: 78.4772 // Hyderabad longitude
   }
 });
 
