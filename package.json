@@ -20,7 +20,7 @@
     "url": "https://github.com/SidhuNamburi/FloraSync/issues"
   },
   "homepage": "https://github.com/SidhuNamburi/FloraSync#readme",
-  "devDependencies": {
+  "dependencies": {
     "concurrently": "^9.1.2"
   }
 }
