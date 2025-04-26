@@ -4,11 +4,11 @@
   "description": "AI-powered plant care assistant that helps users monitor, track, and nurture indoor plants. Features a beautiful web interface with personalized suggestions, weather-based tips, and health tracking.",
   "main": "index.js",
   "scripts": {
-  "start": "concurrently \"npm run server\" \"npm run client\"",
-  "server": "cd Backend && npm start",
-  "client": "cd Frontend && npm start"
-}
-,
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd Backend && npm start",
+    "client": "cd Frontend && npm start",
+    "build": "cd src && npm run build"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SidhuNamburi/FloraSync.git"
