@@ -7,7 +7,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd Backend && npm start",
     "client": "cd Frontend && npm start",
-    "build": "cd src && npm run build"
+    "build": "cd Frontend && npm run build"
   },
   "repository": {
     "type": "git",
