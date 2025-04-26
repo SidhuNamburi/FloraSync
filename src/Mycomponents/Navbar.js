@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({ customLinks, showSearch = true }) => {
   const defaultLinks = [
-    { to: '/', label: 'Home' },
+    { to: '/User', label: 'Home' },
     { to: '/allplants', label: 'Plants' },
     { to: '/location', label: 'Weather' },
     { to: '/', label: 'Help' }

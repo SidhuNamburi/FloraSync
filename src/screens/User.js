@@ -7,7 +7,7 @@ import Infobox from "../Mycomponents/Infobox";
 
 const User = () => {
   const customLinks = [
-    { to: '/', label: 'Home' },
+    { to: '/User', label: 'Home' },
     { to: '/allplants', label: 'Plants' },
     { to: '/location', label: 'Weather' }
   ];
