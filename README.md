@@ -30,4 +30,4 @@ AI-powered plant care assistant that helps users monitor, track, and nurture ind
 ## Installation 🛠️  
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/sidhahadur/floraSync.git
+   git clone https://github.com/sidhuNamburi/floraSync.git
